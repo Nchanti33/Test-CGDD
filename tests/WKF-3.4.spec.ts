@@ -1,130 +1,146 @@
 import { test } from '@playwright/test';
 
-test('test', async ({ page }) => {
+test.setTimeout(60000);
+
+let id: string = "nchanti478@gmail.com"
+let mdp: string = "Blablabla40@"
+let name: string = "WKF3.4 test"
+let date: string = new Date().toISOString().split('T')[0].split('-').reverse().join('-');
+
+test(name, async ({ page }) => {
   await page.goto('https://portail-petitionnaire-cgdd.i-psfr.com/#/auth/lautorite-environnementale');
+  //login
   await page.getByRole('button', { name: 'Accéder à mon espace' }).click();
   await page.getByRole('textbox', { name: 'Identifiant Format attendu:' }).click();
-  await page.getByRole('textbox', { name: 'Identifiant Format attendu:' }).fill('nchanti478@gmail.com');
+  await page.getByRole('textbox', { name: 'Identifiant Format attendu:' }).fill(id);
   await page.getByRole('textbox', { name: 'Mot de passe' }).click();
-  await page.getByRole('textbox', { name: 'Mot de passe' }).fill('Blablabla40@');
+  await page.getByRole('textbox', { name: 'Mot de passe' }).fill(mdp);
+  await page.getByText('Se souvenir de moi').click();
   await page.getByRole('button', { name: 'Se connecter' }).click();
+  //mon espace
   await page.getByRole('link', { name: 'Accéder à mon espace' }).click();
-  await page.getByRole('link', { name: 'FAIRE UNE DEMANDE' }).click();
+  await page.getByRole('link', { name: 'FAIRE UNE DEMANDE' }).dblclick();
+  //demande
   await page.getByText('Personne morale *').click();
   await page.getByRole('button', { name: 'Suivant' }).click();
   await page.getByText('Saisine de l’autorité').click();
-  await page.getByText('Cas par cas ad’hoc pour une UTN *').dblclick();
+  await page.getByText('Cas par cas ad’hoc pour une UTN').click();
   await page.getByRole('button', { name: 'Suivant' }).click();
-  await page.getByText('*').nth(1).click();
-  await page.getByText('Non *').nth(1).click();
+  await page.getByText('Non *').click();
   await page.getByText('Oui *').nth(1).click();
   await page.getByRole('combobox').click();
   await page.getByRole('option', { name: 'Auvergne-Rhône-Alpes' }).click();
-  await page.getByRole('option', { name: 'Auvergne-Rhône-Alpes' }).click();
-  await page.getByRole('option', { name: 'Bourgogne-Franche-Comté' }).click();
   await page.getByRole('combobox').click();
-  await page.getByRole('option', { name: 'Auvergne-Rhône-Alpes' }).click();
+  await page.getByRole('option', { name: 'Bourgogne-Franche-Comté' }).click();
   await page.getByRole('button', { name: 'Valider' }).click();
   await page.getByLabel('Remplir le formulaire').getByRole('button', { name: 'Valider' }).click();
+  //page 1
   await page.getByRole('textbox', { name: 'Intitulé de la demande *' }).click();
-  await page.getByRole('textbox', { name: 'Intitulé de la demande *' }).fill('WKF-3.4');
-  await page.getByRole('textbox', { name: 'Numéro SIRET *' }).click();
-  await page.getByRole('textbox', { name: 'Numéro SIRET *' }).fill('35600000000048');
-  await page.locator('#ei1rf1l-emailPersonneMorale').click();
-  await page.locator('#ei1rf1l-emailPersonneMorale').fill('a@a.com');
-  await page.locator('#ejf8af-Prenom').click();
-  await page.locator('#ejf8af-Prenom').fill('a');
-  await page.locator('#es330go-nom').click();
-  await page.locator('#es330go-nom').fill('a');
-  await page.locator('#efgb3jte-NomPrenomEtQualiteDeLaPersonnePhysiqueHabiliteeARepresenterLaPersonnePubliqueResponsable').click();
-  await page.locator('#efgb3jte-NomPrenomEtQualiteDeLaPersonnePhysiqueHabiliteeARepresenterLaPersonnePubliqueResponsable').fill('a');
-  await page.locator('#eos8uas-PrenompersonnePhysResource').click();
-  await page.locator('#efgb3jte-NomPrenomEtQualiteDeLaPersonnePhysiqueHabiliteeARepresenterLaPersonnePubliqueResponsable').fill('aa');
-  await page.locator('#eos8uas-PrenompersonnePhysResource').fill('a');
-  await page.locator('#exnsjle-nompersonnePhysResource').click();
-  await page.locator('#exnsjle-nompersonnePhysResource').fill('a');
-  await page.locator('#eaw5qel-QualitypersonnePhysResource').click();
-  await page.locator('#eaw5qel-QualitypersonnePhysResource').fill('a');
+  await page.getByRole('textbox', { name: 'Intitulé de la demande *' }).fill(name);
+  await page.getByRole('textbox', { name: 'Numéro SIRET' }).click();
+  await page.getByRole('textbox', { name: 'Numéro SIRET' }).fill('35600000000048');
+  await page.getByRole('textbox', { name: 'Courriel : exemple@mail.fr *' }).nth(0).click();
+  await page.getByRole('textbox', { name: 'Courriel : exemple@mail.fr *' }).nth(0).fill('a@a.com');
+  await page.getByRole('textbox', { name: 'Prénom *' }).nth(0).click();
+  await page.getByRole('textbox', { name: 'Prénom *' }).nth(0).fill('a');
+  await page.getByRole('textbox', { name: 'Nom *', exact: true }).nth(0).click();
+  await page.getByRole('textbox', { name: 'Nom *', exact: true }).nth(0).fill('a');
+  await page.getByRole('textbox', { name: 'Qualité *' }).nth(0).click();
+  await page.getByRole('textbox', { name: 'Qualité *' }).nth(0).fill('a');
+  await page.getByRole('textbox', { name: 'Prénom *' }).nth(1).click();
+  await page.getByRole('textbox', { name: 'Prénom *' }).nth(1).fill('a');
+  await page.getByRole('textbox', { name: 'Nom *', exact: true }).nth(1).click();
+  await page.getByRole('textbox', { name: 'Nom *', exact: true }).nth(1).fill('a');
+  await page.getByRole('textbox', { name: 'Qualité *' }).nth(1).click();
+  await page.getByRole('textbox', { name: 'Qualité *' }).nth(1).fill('a');
   await page.getByRole('textbox', { name: 'Téléphone : +XX X XX XX XX XX' }).click();
-  await page.getByRole('textbox', { name: 'Téléphone : +XX X XX XX XX XX' }).fill('06 66 66 66 66_');
-  await page.locator('#es59zab-emailPersonneMoralesddc').click();
-  await page.locator('#es59zab-emailPersonneMoralesddc').fill('a@a.com');
+  await page.getByRole('textbox', { name: 'Téléphone : +XX X XX XX XX XX' }).pressSequentially('666666666');
+  await page.getByRole('textbox', { name: 'Courriel : exemple@mail.fr *' }).nth(1).click();
+  await page.getByRole('textbox', { name: 'Courriel : exemple@mail.fr *' }).nth(1).fill('a@a.com');
   await page.getByText('Exp: 20 Rue Lecourbe 75015 ParisSupprimer').click();
-  await page.getByRole('textbox', { name: 'Exp: 20 Rue Lecourbe 75015' }).press('Dead');
-  await page.getByRole('textbox', { name: 'Exp: 20 Rue Lecourbe 75015' }).press('^p');
-  await page.getByRole('textbox', { name: 'Exp: 20 Rue Lecourbe 75015' }).fill('paris');
+  await page.getByRole('textbox', { name: 'Exp: 20 Rue Lecourbe 75015' }).pressSequentially('paris');
   await page.getByRole('option', { name: 'Paris', exact: true }).click();
-  await page.locator('#eti19z4 > .choices > .form-control.ui').click();
+  await page.locator('.choices > .form-control.ui').nth(1).click();
   await page.getByRole('option', { name: 'Structurante' }).click();
   await page.getByRole('textbox', { name: 'Intitulé de l\'UTN *' }).click();
-  await page.getByRole('textbox', { name: 'Intitulé de l\'UTN *' }).fill('WKF-3.4');
-  await page.locator('#el6nolo > .choices > .form-control.ui').click();
+  await page.getByRole('textbox', { name: 'Intitulé de l\'UTN *' }).fill(name);
+  await page.locator('.input-group>.form-control').nth(1).click();
+  await page.locator('.input-group>.form-control').nth(1).fill(date);
+  await page.locator('.choices > .form-control.ui').nth(2).click();
   await page.getByRole('option', { name: 'Manuelle' }).click();
   await page.getByText('Exp: ParisExp: ParisRemove').click();
-  await page.getByRole('textbox', { name: 'Exp: Paris' }).fill('paris');
+  await page.getByRole('textbox', { name: 'Exp: Paris' }).pressSequentially('paris');
   await page.getByText('Paris : 75 Paris').click();
-  await page.getByRole('textbox', { name: '2.5 Secteurs du territoire' }).click();
-  await page.getByRole('textbox', { name: '2.5 Secteurs du territoire' }).fill('a');
-  await page.getByLabel('3.1.1. Le territoire est-il').getByText('Non').click();
-  await page.getByLabel('3.1.2 Le territoire est-il').getByText('Non').click();
-  await page.getByLabel('3.1.3 Le territoire est-il').getByText('Non').click();
-  await page.getByLabel('3.1.4 Le territoire est-il').getByText('Non').click();
-  await page.getByLabel('3.1.5 Le territoire est-il').getByText('Non').click();
-  await page.getByLabel('3.2.1. L’UTN a fait l’objet d').getByText('Non', { exact: true }).click();
-  await page.locator('#e825toj > .choices > .form-control.ui').click();
-  await page.getByText('R122-8/2- Les liaisons entre').click();
-  await page.getByText('R122-8/2- Les liaisons entre domaines skiables alpins existantsSupprimer').click();
-  await page.getByRole('option', { name: 'R122-8/2- Les liaisons entre' }).click();
-  await page.getByRole('textbox', { name: '4.2.0. Caractéristiques' }).click();
-  await page.getByRole('textbox', { name: '4.2.0. Caractéristiques' }).fill('a');
-  await page.locator('#e6jylvc > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.getByRole('textbox', { name: '4.2.2. A quelle demande de dé' }).click();
-  await page.getByRole('textbox', { name: '4.2.2. A quelle demande de dé' }).fill('a');
-  await page.getByRole('textbox', { name: '4.2.3. Préciser les modes d\'' }).click();
-  await page.getByRole('textbox', { name: '4.2.3. Préciser les modes d\'' }).fill('a');
-  await page.getByRole('textbox', { name: '4.2.4. Préciser les risques' }).click();
-  await page.getByRole('textbox', { name: '4.2.4. Préciser les risques' }).fill('a');
-  await page.getByRole('textbox', { name: '4.2.5. Préciser les mesures' }).click();
-  await page.getByRole('textbox', { name: '4.2.5. Préciser les mesures' }).fill('a');
-  await page.getByRole('textbox', { name: '4.2.6. Préciser les' }).click();
-  await page.getByRole('textbox', { name: '4.2.6. Préciser les' }).fill('a');
-  await page.locator('#e72gfkp > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('input[name="data[apikey54][e5yhsb5-e72gfkp]"]').nth(1).press('a');
-  await page.locator('#e9px85 > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#eud7zf9 > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#eman1m > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#e50rlr > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#ea1j4xn > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#eu8zf3f > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#egrefr5 > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#e7ohab8 > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#eayg12d > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#e20n5lg > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#eochwv > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#euo7azn > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#edtwr2f > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#eqwqswt > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#ezzro4h > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#e7aqwzp > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#e3xpy7a > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#e512dc > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#eengso > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#ejk9knd > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#e4l4ra > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#eqqvjba > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#elhhgwp > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#eu1vdtg > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#ex9omwvo > div > .input-group > .form-control.input').click();
-  await page.locator('.flatpickr-calendar.animate.open > .flatpickr-innerContainer > .flatpickr-rContainer > .flatpickr-days > .dayContainer > span:nth-child(18)').click();
-  await page.getByRole('textbox', { name: '7.2. Autres consultations' }).click();
-  await page.getByRole('textbox', { name: '7.2. Autres consultations' }).fill('a');
-  await page.locator('#e29fpxr > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#ej7ulwf > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('#eqojc8q > .form-radio > div:nth-child(2) > .form-check-label > span').click();
-  await page.locator('.form-check-label.label-position-right.focus-style').click();
-  await page.locator('.form-check-label.label-position-right.focus-style > span').click();
+  await page.getByRole('textbox', { name: '2.5' }).first().click();
+  await page.getByRole('textbox', { name: '2.5' }).first().fill('a');
+  await page.getByLabel('3.1.1.').getByText('Non').click();
+  await page.getByLabel('3.1.2').getByText('Non').click();
+  await page.getByLabel('3.1.3').getByText('Non').click();
+  await page.getByLabel('3.1.4').getByText('Non').click();
+  await page.getByLabel('3.1.5').getByText('Non').click();
+  await page.getByLabel('3.2.1.').getByText('Non', { exact: true }).click();
+  await page.locator('.choices > .form-control.ui').nth(4).click();
+  await page.getByText('R122-8/2- Les liaisons entre domaines skiables alpins existants').click();
+  await page.getByRole('textbox', { name: '4.2.0.' }).click();
+  await page.getByRole('textbox', { name: '4.2.0.' }).fill('a');
+  await page.getByLabel('4.2.1.1.').getByText('Non').click();
+  await page.getByRole('textbox', { name: '4.2.2.' }).click();
+  await page.getByRole('textbox', { name: '4.2.2.' }).fill('a');
+  await page.getByRole('textbox', { name: '4.2.3.' }).click();
+  await page.getByRole('textbox', { name: '4.2.3.' }).fill('a');
+  await page.getByRole('textbox', { name: '4.2.4.' }).click();
+  await page.getByRole('textbox', { name: '4.2.4.' }).fill('a');
+  await page.getByRole('textbox', { name: '4.2.5.' }).click();
+  await page.getByRole('textbox', { name: '4.2.5.' }).fill('a');
+  await page.getByRole('textbox', { name: '4.2.6.' }).click();
+  await page.getByRole('textbox', { name: '4.2.6.' }).fill('a');
+  await page.getByLabel('4.3.1.').getByText('Non').click();
+  await page.getByLabel('5.2.2').getByText('Non').click();
+  await page.getByLabel('5.2.3').getByText('Non').click();
+  await page.getByLabel('5.2.4').getByText('Non').click();
+  await page.getByLabel('5.2.5').getByText('Non').click();
+  await page.getByLabel('5.2.6').getByText('Non').click();
+  await page.getByLabel('5.2.7').getByText('Non').click();
+  await page.getByLabel('5.2.8').getByText('Non').click();
+  await page.getByLabel('Autre protection').getByText('Non').first().click();
+  await page.getByLabel('5.3.1').getByText('Non').first().click();
+  await page.getByLabel('5.3.2').getByText('Non').click();
+  await page.getByLabel('5.3.3').getByText('Non').click();
+  await page.getByLabel('5.3.4').getByText('Non').click();
+  await page.getByLabel('5.3.5').getByText('Non').click();
+  await page.getByLabel('5.3.6').getByText('Non').click();
+  await page.getByLabel('5.3.7').getByText('Non').click();
+  await page.getByLabel('5.3.8').getByText('Non').click();
+  await page.getByLabel('5.3.9').getByText('Non').click();
+  await page.getByLabel('5.3.10').getByText('Non').click();
+  await page.getByLabel('5.3.11').getByText('Non').click();
+  await page.getByLabel('5.3.12').getByText('Non').click();
+  await page.getByLabel('5.3.13').getByText('Non').click();
+  await page.getByLabel('5.3.14').getByText('Non').click();
+  await page.getByLabel('5.3.15').getByText('Non').click();
+  await page.getByLabel('5.4.1.').getByText('Non').click();
+  await page.locator('.input-group>.form-control').last().click();
+  await page.locator('.input-group>.form-control').last().fill(date);
+  await page.getByRole('textbox', { name: '7.2.' }).click();
+  await page.getByRole('textbox', { name: '7.2.' }).fill('a');
+  await page.getByLabel('Enquête publique ?').getByText('Non').click();
+  await page.getByLabel('Participation du public par voie électronique ?').getByText('Non').click();
+  await page.getByLabel('Enquête publique unique organisée avec une ou plusieurs autres procédures ?').getByText('Non').click();
   await page.getByRole('button', { name: 'Page suivante   ' }).click();
-  await page.getByRole('button', { name: '8.1.1 Dossier de révision,' }).setInputFiles('SPRINT3-EVO-QA(1).xlsx');
-  await page.getByRole('button', { name: '8.1.2 Documents graphiques' }).setInputFiles('SPRINT3-EVO-QA.xlsx');
-  await page.getByRole('button', { name: '8.1.3 L\'auto-évaluation (' }).setInputFiles('ExcelFile-1780671216323.xlsx');
+  //page 2
+  await page.getByRole('button', { name: '8.1' }).first().setInputFiles({
+  name: 'file.txt',
+  mimeType: 'text/plain',
+  buffer: Buffer.from('this is test')
+});
+  await page.getByRole('button', { name: '8.1' }).nth(1).setInputFiles({
+  name: 'file.txt',
+  mimeType: 'text/plain',
+  buffer: Buffer.from('this is test')
+});
+  await page.getByRole('button', { name: '8.1' }).nth(2).setInputFiles({
+  name: 'file.txt',
+  mimeType: 'text/plain',
+  buffer: Buffer.from('this is test')
+});
 });
